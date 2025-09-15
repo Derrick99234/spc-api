@@ -1,5 +1,29 @@
+import { IsString, IsArray, ValidateNested, IsNumber } from 'class-validator';
+import { Type } from 'class-transformer';
+
+class PostDto {
+  @IsString()
+  postType: string;
+
+  @IsNumber()
+  amountSpent: number;
+
+  @IsNumber()
+  viewCount: number;
+
+  @IsNumber()
+  reach: number;
+}
+
 export class CreateFormDto {
-  name: string;
-  email: string;
-  age: number;
+  @IsString()
+  platform: string;
+
+  @IsString()
+  serviceType: string;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => PostDto)
+  post: PostDto[];
 }

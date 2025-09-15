@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Param, Post } from '@nestjs/common';
 import { FormService } from './form.service';
 import { CreateFormDto } from './dto/create-form.dto';
 
@@ -6,8 +6,11 @@ import { CreateFormDto } from './dto/create-form.dto';
 export class FormController {
   constructor(private readonly formService: FormService) {}
 
-  @Post()
-  async submitForm(@Body() dto: CreateFormDto) {
-    return this.formService.saveFormData(dto);
+  @Post(':sheetName')
+  async saveForm(
+    @Body() createFormDto: CreateFormDto,
+    @Param('sheetName') sheetName: string,
+  ) {
+    return this.formService.saveFormData(createFormDto, sheetName);
   }
 }
